@@ -1,4 +1,6 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { useState, useEffect } from "react";
+import { Circle } from "better-react-spinkit";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import Layout from "../components/Layout";
 
@@ -20,12 +22,55 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function App({ Component, pageProps }) {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
   return (
     <>
       <GlobalStyle />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {loading ? (
+        <AppLoading>
+          <AppLoadingContents>
+            <img
+              src="https://download.logo.wine/logo/Star_Wars/Star_Wars-Logo.wine.png"
+              alt=""
+            />
+            <Circle color="#edec51" size={60} />
+          </AppLoadingContents>
+        </AppLoading>
+      ) : (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      )}
     </>
   );
 }
+
+const AppLoading = styled.div`
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 100%;
+`;
+
+const AppLoadingContents = styled.div`
+  text-align: center;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > img {
+    object-fit: contain;
+    height: 150px;
+    margin-bottom: 20px;
+    filter: brightness(0) invert(1);
+  }
+`;

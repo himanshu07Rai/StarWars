@@ -20,6 +20,10 @@ const Starfield = styled.div`
   width: 200px;
   top: 0;
   background-repeat: repeat-y;
+
+  @media (max-width: 450px) {
+    width: 75px;
+  }
 `;
 const StarfieldLeft = styled(Starfield)`
   left: 0;
@@ -37,6 +41,7 @@ const StarfieldRight = styled(Starfield)`
   background-image: url("https://static-mh.content.disney.io/starwars/assets/background/bg_starsR-655c85e404d4.jpg");
 `;
 const Button = styled.button`
+  z-index: 40;
   color: #aaa;
   background-color: transparent;
   border: none;
